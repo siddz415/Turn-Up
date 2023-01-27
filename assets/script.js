@@ -9,6 +9,31 @@ const settings = {
 	}
 };
 
-$.ajax(settings).done(function (response) {
-	console.log(response);
-});
+
+
+
+
+function spotifyApi(){
+var artistSearch = document.getElementById("search-term").value
+const options = {
+	method: 'GET',
+	headers: {
+		'X-RapidAPI-Key': '142b74e2a0msh1c7996bc1656b54p1c1fcajsnbf29db333a4d',
+		'X-RapidAPI-Host': 'spotify23.p.rapidapi.com'
+	}
+};
+console.log(fetch)
+fetch('https://spotify23.p.rapidapi.com/search/?q=' + artistSearch +'&type=multi&offset=0&limit=10&numberOfTopResults=5', options) 
+	.then(function (response) {
+		return response.json();
+	  })
+	  .then(function (data) {
+		console.log(data);
+		console.log(data.artists)
+		document.getElementById("artistdisplay").innerHTML=data.artists.items[0].data.profile.name
+
+	  });
+}
+	
+
+	document.getElementById("artistsearch").addEventListener("click",spotifyApi)
