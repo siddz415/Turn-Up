@@ -8,8 +8,37 @@ const settings = {
 		"X-RapidAPI-Host": "concerts-artists-events-tracker.p.rapidapi.com"
 	}
 };
+
+const optionsTwo = {
+	method: 'GET',
+	headers: {
+		'X-RapidAPI-Key': '142b74e2a0msh1c7996bc1656b54p1c1fcajsnbf29db333a4d',
+		'X-RapidAPI-Host': 'spotify23.p.rapidapi.com'
+	}
+};
+async function artistBio2(artistId) {
+	
+	const response = await fetch('https://spotify23.p.rapidapi.com/artist_overview/?id='+ artistId, optionsTwo)
+	return response.json()
+}
+
+function artistBio(artistId) {
+	fetch('https://spotify23.p.rapidapi.com/artist_overview/?id='+ artistId , optionsTwo)
+		.then(function (response) {
+			return response.json();
+		})
+		(function (data) {
+			console.log(data);
+			
+
+
+		})
+}
+
 //function to pull up artist+albums+songs+playlists
 var artistSearch = document.getElementById("search-artist").value
+var artistId = null
+
 function spotifyApi() {
 	var artistSearch = document.getElementById("search-artist").value
 	const options = {
@@ -24,7 +53,7 @@ function spotifyApi() {
 		.then(function (response) {
 			return response.json();
 		})
-		.then(function (data) {
+		.then(async function (data) {
 			console.log(data)
 			console.log(data.artists.items[0].data.profile.name);
 			console.log(data.tracks.items[0].data.name)
@@ -33,29 +62,31 @@ function spotifyApi() {
 			console.log(data.playlists.items[0].data.name)
 			console.log(data.playlists.items[1].data.name)
 			console.log(data.playlists.items[2].data.name)
-
+			artistId = data.artists.items[0].data.uri.substring(15)
+			const bio = await artistBio2(artistId)
+			console.log(bio);
+			console.log(data.profile.biography.text)
+	
 					//document.getElementById("artistdisplay").innerHTML=data.artists.items[0].data.profile.name
 
+					
+						//fetch('https://spotify23.p.rapidapi.com/artist_overview/?id='+ artistId+ ', optionsTwo')
+						//	.then(function (response) {
+						//		return response.json();
+						//	})
+						//	(function (data) {
+						//		console.log(data);
+					
+					
+						//	})
+					
+				
 				});
+
 		}
 
 //beginning of separate fetch function for artist bio
-const optionsTwo = {
-	method: 'GET',
-	headers: {
-		'X-RapidAPI-Key': '142b74e2a0msh1c7996bc1656b54p1c1fcajsnbf29db333a4d',
-		'X-RapidAPI-Host': 'spotify23.p.rapidapi.com'
-	}
-};
-function artistBio() {
-	fetch('https://spotify23.p.rapidapi.com/artist_overview/?id=2w9zwq3AktTeYYMuhMjju8', optionsTwo)
-		.then(function (response) {
-			return response.json();
-		})
-		(function (data) {
-			console.log(data);
 
 
-		})
-}
+
 document.getElementById("searchbutton").addEventListener("click", spotifyApi)
