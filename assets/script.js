@@ -55,17 +55,30 @@ function spotifyApi() {
 		})
 		.then(async function (data) {
 			console.log(data)
-			console.log(data.artists.items[0].data.profile.name);
-			console.log(data.tracks.items[0].data.name)
-			console.log(data.tracks.items[1].data.name)
-			console.log(data.tracks.items[2].data.name)
-			console.log(data.playlists.items[0].data.name)
-			console.log(data.playlists.items[1].data.name)
-			console.log(data.playlists.items[2].data.name)
+			const bandName = data.artists.items[0].data.profile.name
+			console.log(bandName);
+			const trackData = data.tracks.items
+			for (let index = 0; index < 3; index++) {
+				const track = trackData[index].data;
+				console.log(track)
+			}
+
+		//	console.log(data.tracks.items[0].data.name)
+		//	console.log(data.tracks.items[1].data.name)
+		//	console.log(data.tracks.items[2].data.name)
+		const playlistData = data.playlists.items
+		for (let index = 0; index < 3; index++) {
+			const playlist = playlistData[index].data;
+			console.log(playlist)
+		}
+		//	console.log(data.playlists.items[0].data.name)
+		//	console.log(data.playlists.items[1].data.name)
+		//	console.log(data.playlists.items[2].data.name)
 			artistId = data.artists.items[0].data.uri.substring(15)
 			const bio = await artistBio2(artistId)
 			console.log(bio);
-			console.log(data.profile.biography.text)
+			const bioText =  bio.data.artist.profile.biography.text
+			console.log(bioText)
 	
 					//document.getElementById("artistdisplay").innerHTML=data.artists.items[0].data.profile.name
 
