@@ -1,3 +1,5 @@
+var concertEventsData;
+
 async function userSearch() {
 
 	if(document.getElementById('search-results') !== null) {
@@ -7,6 +9,10 @@ async function userSearch() {
 	if(document.getElementById('no-result-message') !== null) {
         document.getElementById('no-result-message').remove();
     }
+
+	document.querySelectorAll('[id^="narrow-search"]').forEach((element) => { element.remove() })
+	document.querySelectorAll('[id^="artist-image"]').forEach((element) => { element.remove() })
+	document.querySelectorAll('[id^="artist-header"]').forEach((element) => { element.remove() })
 
 	var searchInput = document.getElementById('search-artist').value;
 	console.log(searchInput);
@@ -18,24 +24,6 @@ async function userSearch() {
 			'X-RapidAPI-Host': 'concerts-artists-events-tracker.p.rapidapi.com'
 		}
 	};
-	
-	// FETCH BY CITY
-	// fetch('https://concerts-artists-events-tracker.p.rapidapi.com/location?name=Paris&minDate=2023-01-20&maxDate=2023-12-30&page=1', options)
-	// 	.then(response => response.json())
-	// 	.then(response => console.log(response))
-	// 	.catch(err => console.error(err));
-
-	var concertEventsData;
-	// var eventDescription;
-	// var eventStartDate;
-	// var eventEndDate;
-	// var eventImage;
-	// var venueName;
-	// var venueAddress; //street + city + postal + country
-
-	//for later look into getting supporting acts
-
-
 
 	// display search results and then another field to further narrow by zipcode or city.
 	// FETCH BY ARTIST NAME
@@ -44,27 +32,6 @@ async function userSearch() {
 		.then(response => {concertEventsData = response;})
 		.then(() => console.log(concertEventsData))
 		.catch(err => console.error(err));
-
-
-	//going to have to loop through
-	// eventDescription = concertEventsData.data[0].description;
-	// eventStartDate = concertEventsData.data[0].startDate;
-	// eventEndDate = concertEventsData.data[0].endDate;
-	// eventImage = concertEventsData.data[0].image;
-	// venueName = concertEventsData.data[0].location.name;
-	// venueAddress = concertEventsData.data[0].location.address.streetAddress + "\n" +
-	// 	concertEventsData.data[0].location.address.addressLocality + "\n" +
-	// 	concertEventsData.data[0].location.address.postalCode + "\n" +
-	// 	concertEventsData.data[0].location.address.addressCountry;
-
-	// console.log(eventDescription);
-	// console.log(eventStartDate);
-	// console.log(eventEndDate);
-	// console.log(eventImage);
-	// console.log(venueName);
-	// console.log(venueAddress);
-
-	//since all images below are the same just take the first image and display it at the top
 
 	var noResult = document.createElement('div');
 	noResult.setAttribute('id', 'no-result-message');
@@ -82,10 +49,11 @@ async function userSearch() {
 
 	var divArtistImage = document.createElement('div');
 	var artistName = document.createElement('h2');
+	artistName.setAttribute('id', 'artist-header');
 	artistName.setAttribute('style', 'text-align: center');
 	artistName.innerHTML = "ARTIST: " + searchInput.toUpperCase();
 
-	divArtistImage.setAttribute('id', 'artist-iamge');
+	divArtistImage.setAttribute('id', 'artist-image');
 	divArtistImage.setAttribute('style', 'text-align: center');
 	divArtistImage.innerHTML = "<img src='" + concertEventsData.data[0].image + "'>";
 
@@ -97,10 +65,11 @@ async function userSearch() {
 
 	var narrowSearchField = document.createElement('input');
 	narrowSearchField.setAttribute('id', 'narrow-search-field');
-	narrowSearchField.setAttribute('placeholder', 'Type Zipcode, Country or Venue Name');
+	narrowSearchField.setAttribute('placeholder', 'Type Your Postal Code');
 
 	var narrowSearchButton = document.createElement('button');
 	narrowSearchButton.setAttribute('id', 'narrow-search-button');
+	narrowSearchButton.setAttribute('onclick', 'narrowSearch()');
 	narrowSearchButton.innerHTML = 'Narrow Results';
 
 
@@ -137,11 +106,6 @@ async function userSearch() {
 		// document.getElementById('search-results').appendChild(endText);
 		document.getElementById('search-result-item' + i).appendChild(endText);
 
-		// var image = document.createElement('p');
-		// image.innerHTML = "<img src='" + concertEventsData.data[i].image + "'>";
-		// // document.getElementById('search-results').appendChild(image);
-		// document.getElementById('search-result-item' + i).appendChild(image);
-
 		var locationName = document.createElement('p');
 		locationName.innerHTML = concertEventsData.data[i].location.name;
 		// document.getElementById('search-results').appendChild(locationName);
@@ -167,4 +131,62 @@ async function userSearch() {
 	//create additional search field and button at the top to narrow search by
 	//maybe city or zip or country ???
 
+}
+
+function narrowSearch() {
+
+	console.log("NARROW SEARCH BUTTON CLICKED!");
+
+	var narrowSearchValue = document.getElementById('narrow-search-field').value;
+	console.log(narrowSearchValue);
+
+	if(document.getElementById('search-results') !== null) {
+		for(var i = 0; i < concertEventsData.data.length; i++){
+			document.querySelectorAll('[id^="search-result-item"]').forEach((element) => { element.remove() })
+		}
+    }
+
+	if(document.getElementById('no-result-message') !== null) {
+        document.getElementById('no-result-message').remove();
+    }
+
+	for(var i = 0; i < concertEventsData.data.length; i++) {
+		if(concertEventsData.data[i].location.address.postalCode === narrowSearchValue) {
+			console.log("MATCHING SEARCH VALUE FOUND: " + narrowSearchValue);
+
+			var divResultItem = document.createElement('div');
+			divResultItem.setAttribute('id', 'search-result-item' + i);
+			divResultItem.setAttribute('class', 'result-item');
+			document.getElementById('search-results').appendChild(divResultItem);
+	
+			var descriptionText = document.createElement('p');
+			descriptionText.innerHTML = concertEventsData.data[i].description;
+			document.getElementById('search-result-item' + i).appendChild(descriptionText);
+	
+			var startText = document.createElement('p');
+			startText.innerHTML = "START DATE: " + concertEventsData.data[i].startDate;
+			document.getElementById('search-result-item' + i).appendChild(startText);
+	
+			var endText = document.createElement('p');
+			endText.innerHTML = "END DATE: " + concertEventsData.data[i].endDate;
+			document.getElementById('search-result-item' + i).appendChild(endText);
+	
+			var locationName = document.createElement('p');
+			locationName.innerHTML = concertEventsData.data[i].location.name;
+			document.getElementById('search-result-item' + i).appendChild(locationName);
+	
+			var locationAddress = document.createElement('p');
+			locationAddress.innerHTML =  concertEventsData.data[i].location.address.streetAddress + "\n" +
+				concertEventsData.data[i].location.address.addressLocality + "\n" +
+				concertEventsData.data[i].location.address.postalCode + "\n" +
+				concertEventsData.data[i].location.address.addressCountry;
+			document.getElementById('search-result-item' + i).appendChild(locationAddress);
+	
+			var saveButton = document.createElement('button');
+			saveButton.setAttribute('id', 'save-event-button' + i);
+			saveButton.setAttribute('class', 'save-button-style');
+			saveButton.innerHTML = "Save Event!"
+			document.getElementById('search-result-item' + i).appendChild(saveButton);
+		}
+	}
 }
