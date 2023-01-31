@@ -98,8 +98,4 @@ function spotifyApi() {
 
 		}
 
-//beginning of separate fetch function for artist bio
-
-
-
 document.getElementById("searchbutton").addEventListener("click", spotifyApi)
