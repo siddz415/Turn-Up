@@ -96,3 +96,37 @@ body {
     /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
     background: linear-gradient(to right, rgba(132, 250, 176, 1), rgba(143, 211, 244, 1))
 }
+
+.result-item {
+    margin: 15px;
+    border-bottom: 1px solid black;
+}
+
+.result-item p {
+    margin-bottom: 0px;
+}
+
+.save-button-style {
+    background-color: greenyellow;
+    color: white;
+    font-weight: bold;
+    margin-bottom: 5px;
+    border-radius: 5px;
+}
+
+#narrow-search {
+    margin: 5px;
+}
+
+#narrow-search-field {
+    margin-right: 10px;
+    width: 400px;
+    border-radius: 5px;
+}
+
+#narrow-search-button {
+    border-radius: 5px;
+}
+
+
+

@@ -18,7 +18,7 @@
     <header class="Header">
         <h1>Turn<span class="seo">Up</span></h1>
         <div>
-            <button class="btn text-light" aria-label="Search for Artist" id="searchbutton"><i
+            <button onclick="userSearch()" class="btn text-light" aria-label="Search for Artist" id="searchbutton"><i
                     class="fa fa-search form-control-feedback "></i></button>
             <input type="text" class="searchresult" placeholder=" Search for artists, concerts and shows in your city" id="search-artist">
         </div>
@@ -36,6 +36,7 @@
     </header>
 
     <section class="logo"></section>
+    <div id="search-results-container"></div>
     <form>
         <div class="form-group">
             <label for="exampleInputEmail1">Email address</label>
@@ -118,6 +119,7 @@
 
 
 
+    <script src="assets/script-george.js"></script>
 </body>
 
 </html>
