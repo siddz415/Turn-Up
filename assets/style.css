@@ -163,3 +163,13 @@ body {
 #savedEvents {
     /* width: 80%; */
 }
+
+.saved-container-style {
+    border-bottom: 1px solid black;
+    margin-bottom: 20px;
+}
+
+#savedEvents {
+    height: 750px;
+    overflow: auto;
+}

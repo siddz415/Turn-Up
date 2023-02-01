@@ -16,7 +16,7 @@ const settings = {
 const optionsTwo = {
 	method: 'GET',
 	headers: {
-		'X-RapidAPI-Key': '142b74e2a0msh1c7996bc1656b54p1c1fcajsnbf29db333a4d',
+		'X-RapidAPI-Key': '5ac5fba21cmshac3770b600a15c1p1f2a5cjsned074628e89a',
 		'X-RapidAPI-Host': 'spotify23.p.rapidapi.com'
 	}
 
@@ -49,7 +49,7 @@ function spotifyApi() {
 	const options = {
 		method: 'GET',
 		headers: {
-			'X-RapidAPI-Key': '142b74e2a0msh1c7996bc1656b54p1c1fcajsnbf29db333a4d',
+			'X-RapidAPI-Key': '5ac5fba21cmshac3770b600a15c1p1f2a5cjsned074628e89a',
 			'X-RapidAPI-Host': 'spotify23.p.rapidapi.com'
 		}
 	};

@@ -39,8 +39,15 @@ async function userSearch() {
 
 	noResult.innerHTML = 'No Events Found For This Artist';
 
-	if(concertEventsData.data.length === 0) {
-		console.log('No Events Found For This Artist')
+	console.log('PRINTINGGGGG');
+	console.log(concertEventsData);
+
+	try {
+		if(concertEventsData.data.length === 0) {
+			console.log('No Events Found For This Artist')
+			document.getElementById('search-results-container').appendChild(noResult);
+		}
+	} catch (err) {
 		document.getElementById('search-results-container').appendChild(noResult);
 	}
 
@@ -90,22 +97,18 @@ async function userSearch() {
 
 		var descriptionText = document.createElement('p');
 		descriptionText.innerHTML = concertEventsData.data[i].description;
-		// document.getElementById('search-results').appendChild(descriptionText);
 		document.getElementById('search-result-item' + i).appendChild(descriptionText);
 
 		var startText = document.createElement('p');
 		startText.innerHTML = "START DATE: " + concertEventsData.data[i].startDate;
-		// document.getElementById('search-results').appendChild(startText);
 		document.getElementById('search-result-item' + i).appendChild(startText);
 
 		var endText = document.createElement('p');
 		endText.innerHTML = "END DATE: " + concertEventsData.data[i].endDate;
-		// document.getElementById('search-results').appendChild(endText);
 		document.getElementById('search-result-item' + i).appendChild(endText);
 
 		var locationName = document.createElement('p');
 		locationName.innerHTML = concertEventsData.data[i].location.name;
-		// document.getElementById('search-results').appendChild(locationName);
 		document.getElementById('search-result-item' + i).appendChild(locationName);
 
 		var locationAddress = document.createElement('p');
@@ -113,31 +116,25 @@ async function userSearch() {
 			concertEventsData.data[i].location.address.addressLocality + " " +
 			concertEventsData.data[i].location.address.postalCode + " " +
 			concertEventsData.data[i].location.address.addressCountry;
-		// document.getElementById('search-results').appendChild(locationAddress);
 		document.getElementById('search-result-item' + i).appendChild(locationAddress);
 
 		var saveButton = document.createElement('button');
 		saveButton.setAttribute('id', 'save-event-button' + i);
 		saveButton.setAttribute('class', 'save-button-style');
-		// saveButton.setAttribute('onclick', 'saveToList()');
 		saveButton.innerHTML = "Save Event!"
-		// divResultItem.setAttribute('class', 'result-item');
 		document.getElementById('search-result-item' + i).appendChild(saveButton);
 
 
 		document.getElementById('save-event-button' + i).addEventListener("click", function(event) {
-			// console.log("CLICKED!");
-			// console.log("button id: " + event.target.id);
 			var saveButtonClicked = event.target.id;
 			var saveButtonClickedParent = event.target.parentNode.id;
-			// console.log("button stored in variable: id is: " + saveButtonClicked);
-			// console.log(saveButtonClickedParent);
+			console.log("button stored in variable: id is: " + saveButtonClicked);
+			console.log(saveButtonClickedParent);
 			var savedButton = document.getElementById(saveButtonClicked);
 			savedButton.setAttribute('style', 'background-color: #4C4E52');
 			
 			var paragraphs = document.querySelectorAll('#' + saveButtonClickedParent + ' p');
 			paragraphTexts = [];
-			// console.log(paragraphs.innerHTML);
 
 			paragraphs.forEach(function(paragraph) {
 				paragraphTexts.push(paragraph.innerHTML);
@@ -148,6 +145,16 @@ async function userSearch() {
 
 			savedButton.innerHTML = "Saved!";
 			saveButton.disabled = true;
+
+			var savedObject = localStorage.getItem(saveButtonClickedParent);
+			console.log('savedObject: ', JSON.parse(savedObject));
+			var newdiv = document.createElement('div');
+			newdiv.setAttribute('id', saveButtonClickedParent + saveButtonClicked + '-container');
+			newdiv.setAttribute('class', 'saved-container-style');
+			var parseEvent = JSON.parse(savedObject);
+			newdiv.innerHTML = parseEvent;
+			document.getElementById('savedEvents').appendChild(newdiv);
+
 		});
 
 	}
@@ -163,7 +170,8 @@ function narrowSearch() {
 
 	if(document.getElementById('search-results') !== null) {
 		for(var i = 0; i < concertEventsData.data.length; i++){
-			document.querySelectorAll('[id^="search-result-item"]').forEach((element) => { element.remove() })
+			document.querySelectorAll("[id^='search-result-item']:not([id$='-container'])").forEach((element) => { element.remove() })
+			// ("[id^='search-result-item']:not([id$='save-event-button0-container'])")
 		}
     }
 
@@ -206,23 +214,19 @@ function narrowSearch() {
 			var saveButton = document.createElement('button');
 			saveButton.setAttribute('id', 'save-event-button' + i);
 			saveButton.setAttribute('class', 'save-button-style');
-			// saveButton.setAttribute('onclick', 'saveToList()');
 			saveButton.innerHTML = "Save Event!"
 			document.getElementById('search-result-item' + i).appendChild(saveButton);
 
 			document.getElementById('save-event-button' + i).addEventListener("click", function(event) {
-				// console.log("CLICKED!");
-				// console.log("button id: " + event.target.id);
 				var saveButtonClicked = event.target.id;
 				var saveButtonClickedParent = event.target.parentNode.id;
-				// console.log("button stored in variable: id is: " + saveButtonClicked);
-				// console.log(saveButtonClickedParent);
+				console.log("button stored in variable: id is: " + saveButtonClicked);
+				console.log(saveButtonClickedParent);
 				var savedButton = document.getElementById(saveButtonClicked);
 				savedButton.setAttribute('style', 'background-color: #4C4E52');
 				
 				var paragraphs = document.querySelectorAll('#' + saveButtonClickedParent + ' p');
 				paragraphTexts = [];
-				// console.log(paragraphs.innerHTML);
 	
 				paragraphs.forEach(function(paragraph) {
 					paragraphTexts.push(paragraph.innerHTML);
@@ -233,6 +237,16 @@ function narrowSearch() {
 	
 				savedButton.innerHTML = "Saved!";
 				saveButton.disabled = true;
+	
+				var savedObject = localStorage.getItem(saveButtonClickedParent);
+				console.log('savedObject: ', JSON.parse(savedObject));
+				var newdiv = document.createElement('div');
+				newdiv.setAttribute('id', saveButtonClickedParent + saveButtonClicked + '-container');
+				newdiv.setAttribute('class', 'saved-container-style');
+				var parseEvent = JSON.parse(savedObject);
+				newdiv.innerHTML = parseEvent;
+				document.getElementById('savedEvents').appendChild(newdiv);
+	
 			});
 		}
 	}
