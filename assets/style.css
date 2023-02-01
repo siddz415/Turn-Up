@@ -33,6 +33,16 @@ body {
 
 }
 
+
+.content {
+    width: 80%;
+    display: flex;
+    justify-content: space-between;
+    margin-left: 100px;
+
+
+}
+
 .header {
     padding: 25px;
     font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
@@ -50,6 +60,7 @@ body {
 .searchresult {
     width: 35vw;
     border-radius: 30px;
+    border-color: black;
 }
 
 .header h1 {
@@ -66,33 +77,99 @@ body {
     color: white;
 }
 
-.logo {
-    height: 800px;
+.tags2 {
+    color: white;
+}
+
+.slideshow {
+    height: 620px;
     width: 100%;
     margin-bottom: 25px;
-    background-image: url("../assets/994px-TurnUp_Logo.jpg");
     background-size: cover;
     background-position: center;
 }
 
-.gradient-custom-3 {
-    /* fallback for old browsers */
-    background: #84fab0;
-
-    /* Chrome 10-25, Safari 5.1-6 */
-    background: -webkit-linear-gradient(to right, rgba(132, 250, 176, 0.5), rgba(143, 211, 244, 0.5));
-
-    /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
-    background: linear-gradient(to right, rgba(132, 250, 176, 0.5), rgba(143, 211, 244, 0.5))
+.footer {
+    text-align: center;
+    padding: 30px;
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
 }
 
-.gradient-custom-4 {
-    /* fallback for old browsers */
-    background: #84fab0;
+.float-right {
 
-    /* Chrome 10-25, Safari 5.1-6 */
-    background: -webkit-linear-gradient(to right, rgba(132, 250, 176, 1), rgba(143, 211, 244, 1));
+    padding: 20px;
+    float: right;
+    width: 40%;
+    height: 500px;
+    margin-left: 20px;
+}
 
-    /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+.form-group {
+    width: 50%;
+    margin-left: 100px;
+}
+
+.float-left {
+    padding: 20px;
+    float: left;
+    width: 60%;
+    height: 500px;
+}
+    /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+
     background: linear-gradient(to right, rgba(132, 250, 176, 1), rgba(143, 211, 244, 1))
+} */
+
+.result-item {
+    margin: 15px;
+    border-bottom: 1px solid black;
+}
+
+.result-item p {
+    margin-bottom: 0px;
+}
+
+.save-button-style {
+    background-color: greenyellow;
+    color: white;
+    font-weight: bold;
+    margin-bottom: 5px;
+    border-radius: 5px;
+}
+
+#narrow-search {
+    margin: 5px;
+}
+
+#narrow-search-field {
+    margin-right: 10px;
+    width: 400px;
+    border-radius: 5px;
+}
+
+#narrow-search-button {
+    border-radius: 5px;
+}
+
+#events {
+    height: 750px;
+    overflow: auto;
+}
+
+#artistBio {
+    height: 750px;
+    overflow: auto;
+}
+
+#savedEvents {
+    /* width: 80%; */
+}
+
+.saved-container-style {
+    border-bottom: 1px solid black;
+    margin-bottom: 20px;
+}
+
+#savedEvents {
+    height: 750px;
+    overflow: auto;
 }
