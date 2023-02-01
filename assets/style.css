@@ -159,3 +159,7 @@ body {
     height: 750px;
     overflow: auto;
 }
+
+#savedEvents {
+    /* width: 80%; */
+}
