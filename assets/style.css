@@ -212,5 +212,11 @@ img{
     margin-top: 30px;
 }
 
+.saved-container-style {
+    border-bottom: 1px solid black;
+}
 
-
+#artist-image {
+    height: 200px;
+    width: 250px;
+}
