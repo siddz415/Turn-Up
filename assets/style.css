@@ -169,16 +169,14 @@ body {
 #artistBio {
     height: 750px;
     overflow: auto;
+    background-color: #21D4FD;
+    background-image: linear-gradient(19deg, #21D4FD 0%, #B721FF 100%);
+    padding: 1em;
+    margin: 1em;
 }
 
-#savedEvents {
-    /* width: 80%; */
-}
 
-.saved-container-style {
-    border-bottom: 1px solid black;
-    margin-bottom: 20px;
-}
+
 
 #savedEvents {
     height: 750px;
@@ -189,4 +187,6 @@ body {
     margin: 1em;
 
 }
+
+
 
