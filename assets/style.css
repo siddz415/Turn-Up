@@ -129,11 +129,14 @@ body {
 }
 
 .save-button-style {
-    background-color: greenyellow;
+    background-color: #21D4FD;
+    background-image: linear-gradient(19deg, #21D4FD 0%, #B721FF 100%);
+
+
     color: white;
     font-weight: bold;
     margin-bottom: 5px;
-    border-radius: 5px;
+    border-radius: 10px;
 }
 
 #narrow-search {
@@ -147,15 +150,29 @@ body {
 }
 
 #narrow-search-button {
-    border-radius: 5px;
+    border-radius: 10px;
+    background-color: #21D4FD;
+    background-image: linear-gradient(19deg, #21D4FD 0%, #B721FF 100%);
+
 }
 
 #events {
     height: 750px;
     overflow: auto;
+    background-color: #21D4FD;
+    background-image: linear-gradient(19deg, #21D4FD 0%, #B721FF 100%);
+    padding: 1em;
+    margin: 1em;
+
 }
 
 #About {
     height: 750px;
     overflow: auto;
+    background-color: #21D4FD;
+    background-image: linear-gradient(19deg, #21D4FD 0%, #B721FF 100%);
+    padding: 1em;
+    margin: 1em;
+
 }
+

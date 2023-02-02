@@ -91,7 +91,7 @@ function spotifyApi() {
 		//list.appendChild(li);		
 
 			}
-
+			
 		//	console.log(data.tracks.items[0].data.name)
 		//	console.log(data.tracks.items[1].data.name)
 		//	console.log(data.tracks.items[2].data.name)
@@ -130,22 +130,42 @@ function spotifyApi() {
 			 document.getElementById("About").appendChild(bioBox)
 			 document.getElementById("About").appendChild(bio)
 				
-					//document.getElementById("artistdisplay").innerHTML=data.artists.items[0].data.profile.name
-
-					
-						//fetch('https://spotify23.p.rapidapi.com/artist_overview/?id='+ artistId+ ', optionsTwo')
-						//	.then(function (response) {
-						//		return response.json();
-						//	})
-						//	(function (data) {
-						//		console.log(data);
-					
-					
-						//	})
-					
-				
 				});
 
 		}
 
 document.getElementById("searchbutton").addEventListener("click", spotifyApi)
+
+document.addEventListener('DOMContentLoaded', function() {
+    var elems = document.querySelectorAll('.carousel');
+    //var instances = M.Carousel.init(elems, options);
+	//duration: 1000()
+  });
+
+  // Or with jQuery
+
+  $(document).ready(function(){
+    $('.carousel').carousel();
+	setInterval(function(){ 
+		$('carousel').carousel('next')	 
+	},1000)   
+	
+  });
+
+//   const options = {
+// 	method: 'GET',
+// 	headers: {
+// 		'X-RapidAPI-Key': '1aa6f1f1bcmsh8b7cce1c9244574p1dcb15jsn326b507b3527',
+// 		'X-RapidAPI-Host': 'concerts-artists-events-tracker.p.rapidapi.com'
+// 	}
+// };
+
+// fetch('https://concerts-artists-events-tracker.p.rapidapi.com/artist?name=' + artistSearch, options)
+// 	.then(response => response.json())
+// 	.then(response => console.log(response))
+// 	.catch(err => console.error(err));
+document.querySelector('#eventBtn').addEventListener('click',function(){
+	localStorage.setItem('concertData', 'eventDataHere' )
+})
+var saveData
+document.querySelector('#eventData').textContent = loc
