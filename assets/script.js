@@ -59,7 +59,10 @@ function spotifyApi() {
 			return response.json();
 		})
 		.then(async function (data) {
-
+			var eventsEl = document.getElementById('events');
+			eventsEl.scrollIntoView({
+				behavior: 'smooth'
+			})
 			//const bandName = data.artists.items[0].data.profile.name
 
 			const trackData = data.tracks.items
