@@ -153,7 +153,7 @@ async function userSearch() {
 			newdiv.setAttribute('class', 'saved-container-style');
 			var parseEvent = JSON.parse(savedObject);
 			newdiv.innerHTML = parseEvent;
-			document.getElementById('savedEvents').appendChild(newdiv);
+			document.getElementById('savedEventsWrapperContainer').appendChild(newdiv);
 
 		});
 
@@ -245,9 +245,31 @@ function narrowSearch() {
 				newdiv.setAttribute('class', 'saved-container-style');
 				var parseEvent = JSON.parse(savedObject);
 				newdiv.innerHTML = parseEvent;
-				document.getElementById('savedEvents').appendChild(newdiv);
+				document.getElementById('savedEventsWrapperContainer').appendChild(newdiv);
 	
 			});
 		}
 	}
+}
+
+const container = document.getElementById("savedEventsWrapperContainer");
+
+for (let i = 0; i < localStorage.length; i++) {
+  const key = localStorage.key(i);
+  const value = JSON.parse(localStorage.getItem(key));
+
+  if (Array.isArray(value)) {
+	const arrayContainer = document.createElement("div");
+	arrayContainer.setAttribute('class', 'saved-container-style');
+	// arrayContainer.innerHTML = `Array for key: ${key}`;
+
+	for (let j = 0; j < value.length; j++) {
+	  const arrayItem = document.createElement("div");
+	//   arrayItem.setAttribute('class', 'saved-container-style');
+	  arrayItem.innerHTML = `${value[j]}`;
+	  arrayContainer.appendChild(arrayItem);
+	}
+
+	container.appendChild(arrayContainer);
+  }
 }
