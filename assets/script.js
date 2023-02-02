@@ -10,7 +10,7 @@ const settings = {
 };
 
 
-
+// api keys and settings
 
 
 const optionsTwo = {
@@ -21,6 +21,7 @@ const optionsTwo = {
 	}
 
 };
+//stops function with await; until fetch returns data
 async function artistBio2(artistId) {
 
 	const response = await fetch('https://spotify23.p.rapidapi.com/artist_overview/?id=' + artistId, optionsTwo)
@@ -41,6 +42,7 @@ function artistBio(artistId) {
 }
 
 //function to pull up artist+albums+songs+playlists
+//made var artistId null to retroactively have it be declared by the fetch request
 var artistSearch = document.getElementById("search-artist").value
 var artistId = null
 
@@ -59,7 +61,10 @@ function spotifyApi() {
 			return response.json();
 		})
 		.then(async function (data) {
-
+			var eventsEl = document.getElementById('events');
+			eventsEl.scrollIntoView({
+				behavior: 'smooth'
+			})
 			//const bandName = data.artists.items[0].data.profile.name
 
 			const trackData = data.tracks.items
@@ -67,7 +72,7 @@ function spotifyApi() {
 			var listTitle = document.createElement("h4")
 			listTitle.innerHTML = "Top songs"
 			document.getElementById("About").appendChild(listTitle)
-
+			//for loop to display artist's top 3 tracks
 			for (let index = 0; index < 3; index++) {
 				const track = trackData[index].data.name;
 
@@ -75,26 +80,12 @@ function spotifyApi() {
 				var trackList = document.createElement("li")
 				trackList.innerHTML = track
 
-
-
-
 				document.getElementById("About").appendChild(trackList)
-
-
-				//const list = document.getElementById("About");
-
-				//data.forEach((track)=>{
-				//var li = document.createElement("li");
-				// li.innerText = track;
-
-				//})
-				//list.appendChild(li);		
+	
 
 			}
 
-			//	console.log(data.tracks.items[0].data.name)
-			//	console.log(data.tracks.items[1].data.name)
-			//	console.log(data.tracks.items[2].data.name)
+			//for loop for artist's top 3 albums
 			var albumTitle = document.createElement("h4")
 			albumTitle.innerHTML = "Top Albums"
 			document.getElementById("About").appendChild(albumTitle)
@@ -106,17 +97,11 @@ function spotifyApi() {
 
 				albumList.innerHTML = albums
 
-
-
-
 				document.getElementById("About").appendChild(albumList)
 
 
 			}
-
-			//	console.log(data.albums.items[0].data.name)
-			//	console.log(data.albums.items[1].data.name)
-			//	console.log(data.albums.items[2].data.name)
+			//declaring artist id 
 			artistId = data.artists.items[0].data.uri.substring(15)
 			const bio = await artistBio2(artistId)
 
@@ -133,15 +118,13 @@ function spotifyApi() {
 		});
 
 }
+//clears container on new search
 function clearBox() {
 	document.getElementById("About").innerHTML = "";
 	if (document.getElementById("About") !== null) {
 		clearBox
 
 	}
-
-
-
 
 }
 
