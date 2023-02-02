@@ -16,7 +16,7 @@ const settings = {
 const optionsTwo = {
 	method: 'GET',
 	headers: {
-		'X-RapidAPI-Key': '142b74e2a0msh1c7996bc1656b54p1c1fcajsnbf29db333a4d',
+		'X-RapidAPI-Key': '5ac5fba21cmshac3770b600a15c1p1f2a5cjsned074628e89a',
 		'X-RapidAPI-Host': 'spotify23.p.rapidapi.com'
 	}
 
@@ -49,28 +49,28 @@ function spotifyApi() {
 	const options = {
 		method: 'GET',
 		headers: {
-			'X-RapidAPI-Key': '142b74e2a0msh1c7996bc1656b54p1c1fcajsnbf29db333a4d',
+			'X-RapidAPI-Key': '5ac5fba21cmshac3770b600a15c1p1f2a5cjsned074628e89a',
 			'X-RapidAPI-Host': 'spotify23.p.rapidapi.com'
 		}
 	};
-	console.log(fetch)
+	
 	fetch('https://spotify23.p.rapidapi.com/search/?q=' + artistSearch + '&type=multi&offset=0&limit=10&numberOfTopResults=5', options)
 		.then(function (response) {
 			return response.json();
 		})
 		.then(async function (data) {
-			console.log(data)
-			const bandName = data.artists.items[0].data.profile.name
-			console.log(bandName);
+			
+			//const bandName = data.artists.items[0].data.profile.name
+			
 			const trackData = data.tracks.items
-			console.log(trackData)
+			
 			var listTitle = document.createElement("h4")
 			listTitle.innerHTML="Top songs"
 			document.getElementById("About").appendChild(listTitle)
 
 			for (let index = 0; index < 3; index++) {
 				const track = trackData[index].data.name;
-				console.log(trackData[index].data.name)
+				
 
 				var trackList = document.createElement("li")
 				trackList.innerHTML=track
@@ -101,7 +101,7 @@ function spotifyApi() {
 		const albumData = data.albums.items
 		for (let index = 0; index < 3; index++) {
 			const albums = albumData[index].data.name;
-			console.log(albums)
+			
 			var albumList = document.createElement("li")
 		
 			albumList.innerHTML=albums
@@ -119,9 +119,9 @@ function spotifyApi() {
 		//	console.log(data.albums.items[2].data.name)
 			artistId = data.artists.items[0].data.uri.substring(15)
 			const bio = await artistBio2(artistId)
-			console.log(bio);
+			
 			const bioText =  bio.data.artist.profile.biography.text
-			console.log(bioText)
+			
 			var bioTitle = document.createElement("h4")
 			var bioBox = document.createElement("p")
 			bioTitle.innerHTML = "Artist Bio"
@@ -147,5 +147,18 @@ function spotifyApi() {
 				});
 
 		}
+		function clearBox()
+		{
+			document.getElementById("About").innerHTML = "";
+			if (document.getElementById("About")!==null) {
+				clearBox
+				
+			}
+
+
+
+		}
+
 
 document.getElementById("searchbutton").addEventListener("click", spotifyApi)
+document.getElementById("searchbutton").addEventListener("click", clearBox)
