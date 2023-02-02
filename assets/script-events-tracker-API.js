@@ -39,8 +39,15 @@ async function userSearch() {
 
 	noResult.innerHTML = 'No Events Found For This Artist';
 
-	if(concertEventsData.data.length === 0) {
-		console.log('No Events Found For This Artist')
+	console.log('PRINTINGGGGG');
+	console.log(concertEventsData);
+
+	try {
+		if(concertEventsData.data.length === 0) {
+			console.log('No Events Found For This Artist')
+			document.getElementById('search-results-container').appendChild(noResult);
+		}
+	} catch (err) {
 		document.getElementById('search-results-container').appendChild(noResult);
 	}
 
@@ -82,9 +89,6 @@ async function userSearch() {
     document.getElementById('search-results-container').appendChild(divResults);
 
 	for(var i = 0; i < concertEventsData.data.length; i++) {
-		console.log(concertEventsData.data[i].description);
-		//consider creating another div or two inside and putting this into it.
-		//generate button with unique id for each result - button will be used to save to a list
 
 		var divResultItem = document.createElement('div');
 		divResultItem.setAttribute('id', 'search-result-item' + i);
@@ -93,43 +97,67 @@ async function userSearch() {
 
 		var descriptionText = document.createElement('p');
 		descriptionText.innerHTML = concertEventsData.data[i].description;
-		// document.getElementById('search-results').appendChild(descriptionText);
 		document.getElementById('search-result-item' + i).appendChild(descriptionText);
 
 		var startText = document.createElement('p');
 		startText.innerHTML = "START DATE: " + concertEventsData.data[i].startDate;
-		// document.getElementById('search-results').appendChild(startText);
 		document.getElementById('search-result-item' + i).appendChild(startText);
 
 		var endText = document.createElement('p');
 		endText.innerHTML = "END DATE: " + concertEventsData.data[i].endDate;
-		// document.getElementById('search-results').appendChild(endText);
 		document.getElementById('search-result-item' + i).appendChild(endText);
 
 		var locationName = document.createElement('p');
 		locationName.innerHTML = concertEventsData.data[i].location.name;
-		// document.getElementById('search-results').appendChild(locationName);
 		document.getElementById('search-result-item' + i).appendChild(locationName);
 
 		var locationAddress = document.createElement('p');
-		locationAddress.innerHTML =  concertEventsData.data[i].location.address.streetAddress + "\n" +
-			concertEventsData.data[i].location.address.addressLocality + "\n" +
-			concertEventsData.data[i].location.address.postalCode + "\n" +
+		locationAddress.innerHTML =  concertEventsData.data[i].location.address.streetAddress + " " +
+			concertEventsData.data[i].location.address.addressLocality + " " +
+			concertEventsData.data[i].location.address.postalCode + " " +
 			concertEventsData.data[i].location.address.addressCountry;
-		// document.getElementById('search-results').appendChild(locationAddress);
 		document.getElementById('search-result-item' + i).appendChild(locationAddress);
 
 		var saveButton = document.createElement('button');
 		saveButton.setAttribute('id', 'save-event-button' + i);
 		saveButton.setAttribute('class', 'save-button-style');
 		saveButton.innerHTML = "Save Event!"
-		// divResultItem.setAttribute('class', 'result-item');
 		document.getElementById('search-result-item' + i).appendChild(saveButton);
 
-	}
 
-	//create additional search field and button at the top to narrow search by
-	//maybe city or zip or country ???
+		document.getElementById('save-event-button' + i).addEventListener("click", function(event) {
+			var saveButtonClicked = event.target.id;
+			var saveButtonClickedParent = event.target.parentNode.id;
+			console.log("button stored in variable: id is: " + saveButtonClicked);
+			console.log(saveButtonClickedParent);
+			var savedButton = document.getElementById(saveButtonClicked);
+			savedButton.setAttribute('style', 'background-color: #4C4E52');
+			
+			var paragraphs = document.querySelectorAll('#' + saveButtonClickedParent + ' p');
+			paragraphTexts = [];
+
+			paragraphs.forEach(function(paragraph) {
+				paragraphTexts.push(paragraph.innerHTML);
+			});
+
+			console.log(paragraphTexts);
+			localStorage.setItem(saveButtonClickedParent, JSON.stringify(paragraphTexts));
+
+			savedButton.innerHTML = "Saved!";
+			saveButton.disabled = true;
+
+			var savedObject = localStorage.getItem(saveButtonClickedParent);
+			console.log('savedObject: ', JSON.parse(savedObject));
+			var newdiv = document.createElement('div');
+			newdiv.setAttribute('id', saveButtonClickedParent + saveButtonClicked + '-container');
+			newdiv.setAttribute('class', 'saved-container-style');
+			var parseEvent = JSON.parse(savedObject);
+			newdiv.innerHTML = parseEvent;
+			document.getElementById('savedEventsWrapperContainer').appendChild(newdiv);
+
+		});
+
+	}
 
 }
 
@@ -142,7 +170,8 @@ function narrowSearch() {
 
 	if(document.getElementById('search-results') !== null) {
 		for(var i = 0; i < concertEventsData.data.length; i++){
-			document.querySelectorAll('[id^="search-result-item"]').forEach((element) => { element.remove() })
+			document.querySelectorAll("[id^='search-result-item']:not([id$='-container'])").forEach((element) => { element.remove() })
+			// ("[id^='search-result-item']:not([id$='save-event-button0-container'])")
 		}
     }
 
@@ -176,9 +205,9 @@ function narrowSearch() {
 			document.getElementById('search-result-item' + i).appendChild(locationName);
 	
 			var locationAddress = document.createElement('p');
-			locationAddress.innerHTML =  concertEventsData.data[i].location.address.streetAddress + "\n" +
-				concertEventsData.data[i].location.address.addressLocality + "\n" +
-				concertEventsData.data[i].location.address.postalCode + "\n" +
+			locationAddress.innerHTML =  concertEventsData.data[i].location.address.streetAddress + " " +
+				concertEventsData.data[i].location.address.addressLocality + " " +
+				concertEventsData.data[i].location.address.postalCode + " " +
 				concertEventsData.data[i].location.address.addressCountry;
 			document.getElementById('search-result-item' + i).appendChild(locationAddress);
 	
@@ -187,6 +216,60 @@ function narrowSearch() {
 			saveButton.setAttribute('class', 'save-button-style');
 			saveButton.innerHTML = "Save Event!"
 			document.getElementById('search-result-item' + i).appendChild(saveButton);
+
+			document.getElementById('save-event-button' + i).addEventListener("click", function(event) {
+				var saveButtonClicked = event.target.id;
+				var saveButtonClickedParent = event.target.parentNode.id;
+				console.log("button stored in variable: id is: " + saveButtonClicked);
+				console.log(saveButtonClickedParent);
+				var savedButton = document.getElementById(saveButtonClicked);
+				savedButton.setAttribute('style', 'background-color: #4C4E52');
+				
+				var paragraphs = document.querySelectorAll('#' + saveButtonClickedParent + ' p');
+				paragraphTexts = [];
+	
+				paragraphs.forEach(function(paragraph) {
+					paragraphTexts.push(paragraph.innerHTML);
+				});
+	
+				console.log(paragraphTexts);
+				localStorage.setItem(saveButtonClickedParent, JSON.stringify(paragraphTexts));
+	
+				savedButton.innerHTML = "Saved!";
+				saveButton.disabled = true;
+	
+				var savedObject = localStorage.getItem(saveButtonClickedParent);
+				console.log('savedObject: ', JSON.parse(savedObject));
+				var newdiv = document.createElement('div');
+				newdiv.setAttribute('id', saveButtonClickedParent + saveButtonClicked + '-container');
+				newdiv.setAttribute('class', 'saved-container-style');
+				var parseEvent = JSON.parse(savedObject);
+				newdiv.innerHTML = parseEvent;
+				document.getElementById('savedEventsWrapperContainer').appendChild(newdiv);
+	
+			});
 		}
 	}
+}
+
+const container = document.getElementById("savedEventsWrapperContainer");
+
+for (let i = 0; i < localStorage.length; i++) {
+  const key = localStorage.key(i);
+  const value = JSON.parse(localStorage.getItem(key));
+
+  if (Array.isArray(value)) {
+	const arrayContainer = document.createElement("div");
+	arrayContainer.setAttribute('class', 'saved-container-style');
+	// arrayContainer.innerHTML = `Array for key: ${key}`;
+
+	for (let j = 0; j < value.length; j++) {
+	  const arrayItem = document.createElement("div");
+	//   arrayItem.setAttribute('class', 'saved-container-style');
+	  arrayItem.innerHTML = `${value[j]}`;
+	  arrayContainer.appendChild(arrayItem);
+	}
+
+	container.appendChild(arrayContainer);
+  }
 }
