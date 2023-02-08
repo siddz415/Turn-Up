@@ -38,7 +38,8 @@ body {
     width: 80%;
     display: flex;
     justify-content: space-between;
-    margin-left: 100px;
+    margin-left: 50px;
+
 
 
 }
@@ -82,7 +83,7 @@ body {
 }
 
 .btn {
- background-color: #B721FF;
+    background-color: #B721FF;
 }
 
 .slideshow {
@@ -103,9 +104,10 @@ body {
 
     padding: 20px;
     float: right;
-    width: 40%;
+    width: 50%;
     height: 500px;
-    margin-left: 20px;
+    
+
 }
 
 .form-group {
@@ -116,12 +118,12 @@ body {
 .float-left {
     padding: 20px;
     float: left;
-    width: 60%;
+    width: 50%;
     height: 500px;
+    
 }
-    /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+
-    background: linear-gradient(to right, rgba(132, 250, 176, 1), rgba(143, 211, 244, 1))
-} */
+
+
 
 .result-item {
     margin: 15px;
@@ -133,7 +135,7 @@ body {
 }
 
 /* carousel */
-.carousel-container{
+.carousel-container {
     align-items: center;
     margin: 0 auto;
     height: 100%;
@@ -141,8 +143,8 @@ body {
     max-height: 400px;
 }
 
-img{
-   height: 100%;
+img {
+    height: 100%;
     width: 100%;
 
 }
@@ -178,8 +180,10 @@ img{
 #events {
     height: 750px;
     overflow: auto;
-    background-color: #21D4FD;
-    background-image: linear-gradient(19deg, #21D4FD 0%, #B721FF 100%);
+    background-color: #FBDA61;
+    background-image: linear-gradient(45deg, #FBDA61 0%, #FF5ACD 100%);
+
+
     padding: 1em;
     margin: 1em;
 
@@ -188,10 +192,11 @@ img{
 #artistBio {
     height: 750px;
     overflow: auto;
-    background-color: #21D4FD;
-    background-image: linear-gradient(19deg, #21D4FD 0%, #B721FF 100%);
+    background-color: #FBDA61;
+    background-image: linear-gradient(45deg, #FBDA61 0%, #FF5ACD 100%);
     padding: 1em;
     margin: 1em;
+    
 }
 
 
@@ -200,8 +205,8 @@ img{
 #savedEvents {
     height: 750px;
     overflow: auto;
-    background-color: #21D4FD;
-    background-image: linear-gradient(19deg, #21D4FD 0%, #B721FF 100%);
+    background-color: #FBDA61;
+    background-image: linear-gradient(45deg, #FBDA61 0%, #FF5ACD 100%);
     padding: 1em;
     margin: 1em;
 
@@ -219,4 +224,21 @@ img{
 #artist-image {
     height: 200px;
     width: 250px;
+}
+
+@media only screen and (max-device-width: 480px) {
+    .content {
+        flex-direction: column;
+        width: auto;
+        margin-left: 0;
+    }
+
+    .float-left {
+        width: 100%;
+
+    }
+    .float-right {
+        width: 100%;
+
+    }
 }
